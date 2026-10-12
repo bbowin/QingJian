@@ -140,16 +140,17 @@ For academic papers demanding repeated polishing, QingJian offers a calmer, more
 ## 🖼 演示 | Demos（第 8 章 · 扩展仿真）
 
 | 演示 | 文件 |
-|---|---|
-| chart 函数曲线 | `assets/sec81-chart.png` |
-| smiles 化学结构式 | `assets/sec82-smiles.png` |
-| physim 物化仿真（滑块交互） | `assets/sec83-physim.png` |
-| canvas-math 数学绘图 | `assets/sec84-canvasmath.png` |
-| chemsim 化学仿真 | `assets/sec85-chemsim.png` |
-| astrosim 天文仿真 | `assets/sec86-astrosim.png` |
-| ABC 五线谱 + 缩窄播放条 | `assets/sec87-abc.png` |
-| 第 8 章全动画漫游 | `assets/qj-section8.webm` |
-| 《歌唱祖国》歌词对位实拍 | `assets/abc-v1584.png` |
+| ---- | ---- |
+| chart 函数曲线 | ![chart函数曲线](./assets/sec81-chart.png) |
+| smiles 化学结构式 | ![smiles化学结构式](./assets/sec82-smiles.png) |
+| physim 物化仿真（滑块交互） | ![物化仿真](./assets/sec83-physim.png) |
+| canvas-math 数学绘图 | ![数学绘图](./assets/sec84-canvasmath.png) |
+| chemsim 化学仿真 | ![化学仿真](./assets/sec85-chemsim.png) |
+| astrosim 天文仿真 | ![天文仿真](./assets/sec86-astrosim.png) |
+| ABC 五线谱 + 缩窄播放条 | ![五线谱](./assets/sec87-abc.png) |
+| 第 8 章全动画漫游 | <video controls width="400"><source src="./assets/qj-section8.webm"></video> |
+| 《歌唱祖国》歌词对位实拍 | ![歌词对位](./assets/abc-v1584.png) |
+
 
 ---
 
