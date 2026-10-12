@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青简 · QingJian —— 欢迎首页</title>
+<style>
+body { max-width: 100vw; overflow-x: hidden; }
+:root { --font-sans: "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif; --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Cascadia Code",
+    "Liberation Mono", Menlo, monospace; --nav-h: 46px; --tb-w: 56px; --bg: #faf7f0; --panel: #fffefb; --panel-2: #f6f1e6; --border: #ece3d0; --border-strong: #dccdb0; --text: #2c2c2c; --muted: #7a6a5c; --faint: #a08e7c; --accent: #a33327; --accent-strong: #7d2419; --accent-soft: #f6e8e4; --hover: rgba(163, 51, 39, .07); --ok: #1a9e56; --warn: #d9822b; --err: #d64545; --code-bg: #fbf7ee; --code-border: #e8ddc3; --shadow-sm: 0 1px 2px rgba(125, 36, 25, .06), 0 2px 8px rgba(125, 36, 25, .05); --shadow-md: 0 10px 32px rgba(125, 36, 25, .12), 0 3px 8px rgba(125, 36, 25, .07); --radius: 10px; color-scheme: light; }
+body.dark { --bg: #17130f; --panel: #201a14; --panel-2: #2a2118; --border: #3a2f24; --border-strong: #54432e; --text: #ece4d8; --muted: #a4937f; --faint: #7d6f5e; --accent: #d08a76; --accent-strong: #e0a795; --accent-soft: #3a241f; --hover: rgba(208, 138, 118, .13); --ok: #3fb96e; --warn: #e0a458; --err: #e06c6c; --code-bg: #221b13; --code-border: #3a2f24; --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3); --shadow-md: 0 10px 32px rgba(0, 0, 0, .5), 0 3px 8px rgba(0, 0, 0, .35); color-scheme: dark; }
+body { font-family: var(--font-sans); color: var(--text); background: var(--bg); display: flex; flex-direction: column; transition: background 0.2s, color 0.2s; -webkit-font-smoothing: antialiased; }
+body.dark ::selection { background: rgba(91, 140, 255, 0.28); }
+body.dark .status-state { background: rgba(63, 185, 110, 0.12); border-color: rgba(63, 185, 110, 0.32); }
+body.dark .status-state.busy { background: rgba(224, 164, 88, 0.12); }
+body.dark .status-state.error { background: rgba(224, 108, 108, 0.12); }
+@keyframes stateBlink { 
+  50% { opacity: 0.25; }
+}
+.view-columns .resizer { display: block; }
+.view-columns .editor-pane { flex: 0 0 auto; }
+.view-columns .preview-pane { flex: 0 0 auto; }
+body { max-width: 100vw; overflow-x: hidden; }
+@keyframes ddIn { 
+  0% { opacity: 0; transform: translateY(-4px); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rotNudge { 
+  0%, 100% { transform: rotate(-28deg); }
+  50% { transform: rotate(28deg); }
+}
+body.android .tb-popup { right: 12px; bottom: 158px; max-height: 62vh; overflow-y: auto; border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 36px; position: fixed !important; left: auto !important; top: auto !important; width: min(92vw, 380px) !important; }
+body.android .logo-btn { display: none !important; }
+body { max-width: 100vw; overflow-x: hidden; }
+body.dark .markdown-body :not(pre) > code { background: rgba(91, 140, 255, 0.14); color: rgb(156, 198, 255); }
+body.dark .markdown-body pre code.hljs { color: rgb(201, 209, 217); }
+body.dark .markdown-body .hljs-keyword, body.dark .markdown-body .hljs-selector-tag, body.dark .markdown-body .hljs-literal, body.dark .markdown-body .hljs-section, body.dark .markdown-body .hljs-link, body.dark .markdown-body .hljs-meta .hljs-keyword, body.dark .markdown-body .hljs-doctag { color: rgb(255, 123, 114); }
+body.dark .markdown-body .hljs-string, body.dark .markdown-body .hljs-regexp, body.dark .markdown-body .hljs-addition, body.dark .markdown-body .hljs-attribute, body.dark .markdown-body .hljs-meta .hljs-string { color: rgb(165, 214, 255); }
+body.dark .markdown-body .hljs-attr, body.dark .markdown-body .hljs-variable, body.dark .markdown-body .hljs-template-variable, body.dark .markdown-body .hljs-type, body.dark .markdown-body .hljs-selector-class, body.dark .markdown-body .hljs-selector-attr, body.dark .markdown-body .hljs-name { color: rgb(121, 192, 255); }
+body.dark .markdown-body .hljs-number, body.dark .markdown-body .hljs-symbol, body.dark .markdown-body .hljs-bullet, body.dark .markdown-body .hljs-built_in, body.dark .markdown-body .hljs-literal { color: rgb(255, 166, 87); }
+body.dark .markdown-body .hljs-comment, body.dark .markdown-body .hljs-quote { color: rgb(139, 148, 158); }
+body.dark .markdown-body .hljs-title, body.dark .markdown-body .hljs-title.function_, body.dark .markdown-body .hljs-title.class_ { color: rgb(210, 168, 255); }
+body.dark .markdown-body .hljs-emphasis { font-style: italic; }
+body.dark .markdown-body .hljs-strong { font-weight: 700; }
+body.dark .markdown-body .katex { color: var(--text); }
+body.dark .markdown-body .graphviz svg, body.dark .markdown-body .plantuml svg { filter: invert(0.92) hue-rotate(180deg) saturate(0.65); }
+@keyframes headingFlash { 
+  0% { background: rgba(255, 214, 102, 0.35); }
+  100% { background: transparent; }
+}
+body.dark .markdown-body .abc-score { background: rgb(255, 255, 255); }
+:root { --qj-primary: #a33327; --qj-primary-deep: #7d2419; --qj-primary-soft: #f6e8e4; --qj-gold: #b08540; --qj-gold-soft: #f0e6cd; --qj-paper: #f4efe0; --qj-ink: #2c2c2c; --qj-ink-soft: #6b5a4e; --qj-line: rgba(176, 133, 64, .35); --qj-accent-bg: rgba(253, 246, 230, .55); --qj-font-cn: "Source Han Serif SC", "Noto Serif SC", "Songti SC", SimSun, serif; --qj-font-en: Georgia, "Times New Roman", serif; --qj-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace; --qj-bg-main: #ffffff; --qj-bg-edit: #fffdf8; --qj-text-main: #2c2c2c; --qj-h-color: #7d2419; }
+body.qj-print-mode { --qj-paper: #ffffff; --qj-accent-bg: #fafafa; --qj-bg-edit: #ffffff; --qj-line: rgba(125, 36, 25, .3); --qj-font-cn: "Source Han Serif SC", "Noto Serif SC", "Songti SC", SimSun, serif; --qj-text-main: #111111; --qj-h-color: #7d2419; font-family: var(--qj-font-cn), var(--qj-font-en), sans-serif; }
+body { background: var(--qj-bg-main); color: var(--qj-text-main); }
+body { max-width: 100vw; overflow-x: hidden; }
+#print-settings .ps-sub { margin: 0px 0px 14px; font-size: 12px; color: rgb(100, 116, 139); }
+.dark #print-settings .ps-sub { color: rgb(148, 163, 184); }
+#print-settings .ps-row { margin-bottom: 12px; }
+#print-settings .ps-row label { display: block; font-size: 12px; color: rgb(71, 85, 105); margin-bottom: 4px; }
+.dark #print-settings .ps-row label { color: rgb(203, 213, 225); }
+#print-settings .ps-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+#print-settings .ps-btns button { font-size: 13px; padding: 7px 16px; border-radius: 8px; cursor: pointer; border: 1px solid rgb(203, 213, 225); background: rgb(255, 255, 255); color: rgb(51, 65, 85); }
+.dark #print-settings .ps-btns button { background: rgb(51, 65, 85); color: rgb(226, 232, 240); border-color: rgb(71, 85, 105); }
+#print-settings .ps-btns button.ps-ok { background: rgb(13, 110, 253); color: rgb(255, 255, 255); border-color: rgb(13, 110, 253); }
+#print-settings .ps-btns button.ps-ok:hover { background: rgb(11, 94, 215); }
+@keyframes syncFlash { 
+  0% { background: rgba(59, 130, 246, 0.3); box-shadow: rgba(59, 130, 246, 0.25) 0px 0px 0px 2px; }
+  100% { background: rgba(59, 130, 246, 0.12); box-shadow: rgba(59, 130, 246, 0.15) 0px 0px 0px 2px; }
+}
+.welcome-hero { position: relative; text-align: center; padding: 76px 20px 40px; overflow: hidden; background: linear-gradient(160deg, rgb(246, 239, 224) 0%, rgb(253, 250, 243) 42%, rgb(244, 239, 224) 100%); }
+.dark .welcome-hero { background: linear-gradient(160deg, rgb(11, 26, 46) 0%, rgb(15, 31, 54) 55%, rgb(15, 23, 42) 100%); }
+.welcome-grid-bg { position: absolute; inset: 0px; pointer-events: none; opacity: 0.5; background-image: linear-gradient(rgba(176, 133, 64, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(176, 133, 64, 0.05) 1px, transparent 1px); background-size: 34px 34px; mask-image: radial-gradient(70% 90% at 50% 30%, rgb(0, 0, 0) 30%, transparent 75%); }
+.dark .welcome-grid-bg { background-image: linear-gradient(rgba(96, 165, 250, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(96, 165, 250, 0.08) 1px, transparent 1px); }
+.welcome-logo { position: relative; width: 64px; height: 64px; margin: 0px auto 18px; filter: drop-shadow(rgba(0, 114, 196, 0.35) 0px 6px 18px); }
+.welcome-title { position: relative; margin: 0px; font-size: 42px; font-weight: 700; letter-spacing: 4px; color: var(--qj-primary); line-height: 1.15; }
+.dark .welcome-title { color: rgb(96, 165, 250); }
+.welcome-en { margin-left: 14px; font-size: 24px; font-weight: 300; letter-spacing: 5px; color: rgb(100, 116, 139); vertical-align: 8px; }
+.dark .welcome-en { color: rgb(148, 163, 184); }
+.welcome-tagline { position: relative; margin: 14px 0px 4px; font-size: 17px; letter-spacing: 6px; color: rgb(71, 85, 105); font-weight: 500; }
+.dark .welcome-tagline { color: rgb(203, 213, 225); }
+.welcome-tagline-en { position: relative; margin: 0px 0px 26px; font-size: 13px; letter-spacing: 2.4px; color: rgb(148, 163, 184); font-style: italic; }
+.dark .welcome-tagline-en { color: rgb(100, 116, 139); }
+.welcome-actions { position: relative; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.welcome-actions .welcome-btn { padding: 12px 32px; border: none; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; letter-spacing: 1px; background: linear-gradient(135deg, var(--qj-primary), var(--qj-primary-deep)); color: rgb(255, 255, 255); box-shadow: rgba(0, 114, 196, 0.32) 0px 6px 18px; transition: transform 0.18s, box-shadow 0.18s; }
+.welcome-actions .welcome-btn:hover { transform: translateY(-2px); box-shadow: rgba(0, 114, 196, 0.42) 0px 10px 26px; }
+.welcome-actions .welcome-btn.secondary { background: rgb(255, 255, 255); color: var(--qj-primary); border: 1px solid rgba(163, 51, 39, 0.25); box-shadow: rgba(0, 114, 196, 0.1) 0px 4px 14px; }
+.dark .welcome-actions .welcome-btn.secondary { background: rgb(15, 23, 42); color: rgb(96, 165, 250); border-color: rgb(30, 58, 95); }
+.welcome-actions .welcome-btn.secondary:hover { border-color: rgb(147, 197, 253); box-shadow: rgba(0, 114, 196, 0.2) 0px 8px 20px; }
+.welcome-sub { position: relative; margin-top: 18px; font-size: 12.5px; color: rgb(148, 163, 184); letter-spacing: 0.5px; }
+.dark .welcome-sub { color: rgb(100, 116, 139); }
+.welcome-body { max-width: 100%; margin: 0px; padding: 30px 20px 40px; box-sizing: border-box; }
+.welcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 34px; max-width: 980px; margin-left: auto; margin-right: auto; }
+.welcome-grid .quick-card { display: flex; flex-direction: column; gap: 4px; padding: 18px 18px 14px; background: rgb(255, 255, 255); border: 1px solid rgb(237, 242, 247); border-radius: 14px; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; }
+.dark .welcome-grid .quick-card { background: rgb(17, 28, 48); border-color: rgb(30, 41, 59); }
+.welcome-grid .quick-card:hover { transform: translateY(-3px); border-color: rgb(147, 197, 253); box-shadow: rgba(0, 114, 196, 0.14) 0px 10px 24px; }
+.qc-ico { font-size: 22px; line-height: 1.2; }
+.welcome-grid .quick-card h4 { margin: 2px 0px 0px; font-size: 14px; color: rgb(0, 100, 174); }
+.dark .welcome-grid .quick-card h4 { color: rgb(124, 192, 255); }
+.welcome-grid .quick-card p { margin: 0px; font-size: 12px; color: rgb(113, 128, 150); line-height: 1.4; }
+.dark .welcome-grid .quick-card p { color: rgb(136, 153, 179); }
+.welcome-recent h3 { margin: 0px 0px 12px; font-size: 15px; font-weight: 600; color: rgb(51, 65, 85); letter-spacing: 2px; }
+.dark .welcome-recent h3 { color: rgb(203, 213, 225); }
+.welcome-recent .recent-files { display: flex; flex-direction: column; gap: 6px; }
+.welcome-recent .recent-empty { font-size: 13px; color: rgb(148, 163, 184); padding: 8px 2px; }
+body.dark .markdown-body h3 { color: rgb(124, 196, 255); }
+body.dark .markdown-body pre { box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 3px; }
+.qj-code-ln { position: absolute; left: 0px; top: 0px; bottom: 0px; width: 2.6em; text-align: right; padding: 0.85em 0.55em 0.85em 0px; color: rgba(127, 127, 127, 0.62); user-select: none; border-right: 1px solid rgba(127, 127, 127, 0.1); font-size: 0.85em; line-height: inherit; overflow: hidden; font-variant-numeric: tabular-nums; background: inherit; }
+.qj-code-ln span { display: block; line-height: inherit; }
+.markdown-body:not(.pre-ln) .qj-code-ln { visibility: hidden; }
+body.android .svg-tools { opacity: 0; pointer-events: none; transition: opacity 0.16s; }
+body.android .svg-tools.svg-tools-show { opacity: 1; pointer-events: auto; }
+body.android .svg-tools.svg-tools-show-only { }
+#welcome-page { background: linear-gradient(rgb(248, 243, 231) 0%, rgb(253, 251, 245) 42%, rgb(244, 239, 224) 100%); }
+.welcome-hero { position: relative; overflow: hidden; }
+.qj-bamboo-layer { position: absolute; inset: 0px; pointer-events: none; z-index: 0; }
+.qj-bb { position: absolute; top: 12%; font-family: KaiTi, STKaiti, serif; font-size: 15px; color: rgba(176, 133, 64, 0.28); letter-spacing: 2px; animation: 16s ease-in-out 0s infinite normal none running qjFloat; white-space: nowrap; }
+.qj-leaf { position: absolute; top: 34%; width: 14px; height: 34px; background: linear-gradient(160deg, rgb(217, 192, 122) 0%, rgb(230, 199, 136) 60%, rgb(202, 166, 84) 100%); border-radius: 60% 40% 55% 45% / 45% 55%; opacity: 0.18; transform-origin: 50% 100%; animation: 11s ease-in-out 0s infinite normal none running qjLeaf; }
+@keyframes qjFloat { 
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(-2deg); opacity: 0.22; }
+  25% { transform: translateY(-16px) translateX(6px) rotate(2deg); opacity: 0.34; }
+  50% { transform: translateY(6px) translateX(-4px) rotate(-1deg); opacity: 0.18; }
+  75% { transform: translateY(-8px) translateX(8px) rotate(3deg); opacity: 0.3; }
+}
+@keyframes qjLeaf { 
+  0%, 100% { transform: translateY(0px) rotate(-8deg) scale(0.95); }
+  30% { transform: translateY(-22px) rotate(10deg) scale(1.04); }
+  55% { transform: translateY(10px) rotate(-12deg) scale(0.92); }
+  80% { transform: translateY(-12px) rotate(6deg) scale(1); }
+}
+.welcome-logo.qj-logo { width: 76px; height: 76px; filter: drop-shadow(rgba(178, 133, 64, 0.38) 0px 8px 20px); animation: 7s ease-in-out 0s infinite normal none running qjStamp; }
+@keyframes qjStamp { 
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-5px) scale(1.02); }
+}
+.welcome-title { color: rgb(138, 90, 35); }
+.welcome-title .welcome-en { color: rgb(160, 128, 63); }
+.welcome-tagline { color: rgb(109, 76, 30); letter-spacing: 8px; }
+.welcome-tagline-en { color: rgb(160, 128, 63); }
+.welcome-sub b { color: rgb(138, 90, 35); }
+.welcome-actions .welcome-btn { background: linear-gradient(135deg, rgb(163, 51, 39), rgb(187, 34, 34)); box-shadow: rgba(187, 34, 34, 0.3) 0px 6px 18px; }
+.welcome-actions .welcome-btn:hover { box-shadow: rgba(187, 34, 34, 0.42) 0px 10px 26px; }
+.welcome-actions .welcome-btn.secondary { background: rgb(255, 253, 247); color: rgb(163, 51, 39); border: 1px solid rgb(234, 217, 184); box-shadow: rgba(176, 133, 64, 0.12) 0px 4px 14px; }
+.welcome-actions .welcome-btn.secondary:hover { border-color: rgb(212, 176, 119); box-shadow: rgba(176, 133, 64, 0.2) 0px 8px 20px; }
+.welcome-grid .quick-card { background: linear-gradient(rgb(255, 253, 246), rgb(251, 246, 234)); border: 1px solid rgb(232, 220, 191); border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+.welcome-grid .quick-card:hover { transform: translateY(-3px); border-color: rgb(201, 168, 96); box-shadow: rgba(176, 133, 64, 0.16) 0px 10px 24px; }
+.welcome-grid .quick-card h4 { color: rgb(138, 90, 35); }
+.welcome-grid .quick-card p { color: rgb(122, 106, 78); }
+.qc-ico { font-size: 22px; }
+.welcome-recent h3 { color: rgb(109, 76, 30); }
+.welcome-recent .recent-empty { color: rgb(168, 154, 127); }
+.welcome-recent .recent-act { color: rgb(163, 51, 39); border-color: rgb(234, 217, 184); }
+.dark #welcome-page { background: linear-gradient(rgb(18, 23, 34) 0%, rgb(13, 17, 23) 100%); }
+.welcome-hero { padding-top: 4vh; }
+.welcome-brand-top { display: flex; justify-content: center; margin-bottom: 2.4vh; animation: 6s ease-in-out 0s infinite normal none running qjFloat; }
+.welcome-brand-top svg { filter: drop-shadow(rgba(163, 51, 39, 0.28) 0px 3px 8px); }
+.welcome-brand { display: flex; justify-content: center; }
+.welcome-brand-main { display: flex; align-items: center; justify-content: center; gap: 22px; }
+.welcome-brand .welcome-logo.qj-logo { margin: 0px; }
+.welcome-brand-text { text-align: left; display: flex; flex-direction: column; gap: 2px; }
+.welcome-brand-text .welcome-title { font-size: 42px; margin-bottom: 0px; }
+.welcome-brand-text .welcome-title .welcome-en { font-size: 17px; margin-left: 12px; letter-spacing: 0.06em; }
+.welcome-brand-text .welcome-tagline { font-size: 15px; color: rgb(138, 90, 35); }
+.welcome-brand-text .welcome-tagline-en { font-size: 12.5px; color: rgb(160, 138, 107); }
+.welcome-grid { gap: 14px; }
+.quick-card { border: 1px solid rgba(176, 133, 64, 0.35); background: linear-gradient(rgb(255, 253, 246), rgb(253, 246, 230)); transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; }
+.quick-card:hover { transform: translateY(-3px); border-color: rgba(176, 133, 64, 0.7); box-shadow: rgba(138, 90, 35, 0.14) 0px 8px 22px; }
+.quick-card h4 { color: rgb(107, 74, 31); }
+.quick-card p { color: rgb(138, 115, 80); }
+.welcome-recent { max-width: 980px; margin-left: auto; margin-right: auto; border: 1px solid rgba(176, 133, 64, 0.28); background: rgba(255, 253, 246, 0.72); backdrop-filter: blur(6px); }
+.welcome-recent h3 { color: rgb(107, 74, 31); }
+.recent-file-item:hover { background: rgba(176, 133, 64, 0.1); }
+body.toolbar-folded #toolbar { width: 0px; opacity: 0; pointer-events: none; padding-left: 0px; padding-right: 0px; min-width: 0px; }
+body.qj-print-mode .editor-pane, body.qj-print-mode #note-prev-wrap { background: var(--qj-bg-edit); }
+body.qj-print-mode .markdown-body, body.qj-print-mode .latex-doc { font-family: var(--qj-font-cn), var(--qj-font-en), serif; }
+body.dark #wb-stage { background: rgb(250, 245, 234); }
+body.dark #notes-edit-view textarea, body.dark #notes-edit-view .notes-md-preview { background: rgb(250, 245, 234); }
+.qj-loader-ring { width: 46px; height: 46px; border-radius: 50%; border-width: 3px; border-style: solid; border-color: rgb(163, 51, 39) rgb(224, 213, 188) rgb(224, 213, 188); border-image: initial; animation: 0.8s linear 0s infinite normal none running qj-spin; }
+@keyframes qj-spin { 
+  100% { transform: rotate(360deg); }
+}
+.welcome-grid .quick-card em { display: block; margin-top: 4px; font-size: 10.5px; color: rgb(176, 154, 106); font-style: normal; letter-spacing: 0.5px; }
+body.android #welcome-page { min-height: 100%; }
+body.android #welcome-page .welcome-hero { padding-top: 12px; }
+body.android #welcome-page .welcome-brand-top { margin-bottom: 8px; }
+body.android #welcome-page .welcome-sub { margin-top: 10px; }
+body.android { margin: 0px; }
+body.android #welcome-page .welcome-body { padding-bottom: 24px; }
+.welcome-paper-scene { margin: 26px auto 6px; width: 100%; max-width: 100%; padding: 0px 2%; text-align: center; box-sizing: border-box; }
+.welcome-paper-scene svg { width: 100%; height: auto; max-height: 300px; opacity: 0.9; }
+.welcome-paper-scene svg { width: 100%; height: auto; opacity: 0.9; }
+.welcome-paper-scene .ps-quote { margin-top: 2px; font-size: 12.5px; color: rgb(160, 128, 63); letter-spacing: 6px; font-family: KaiTi, STKaiti, serif; }
+.ps-bamboo rect, .ps-bamboo line { animation: 6s ease-in-out 0s infinite normal none running psBamboo; }
+.ps-paper rect, .ps-paper path { animation: 7s ease-in-out 0s infinite normal none running psPaper; }
+.ps-code text { animation: 8s ease-in-out 0s infinite normal none running psCode; }
+.ps-web circle { animation: 4.5s ease-in-out 0s infinite normal none running psNode; }
+.ps-web line { animation: 6s ease-in-out 0s infinite normal none running psLine; }
+@keyframes psBamboo { 
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes psPaper { 
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes psCode { 
+  0%, 100% { transform: translateY(0px); opacity: 0.85; }
+  50% { transform: translateY(-5px); opacity: 1; }
+}
+@keyframes psNode { 
+  0%, 100% { r: 4; opacity: 0.7; }
+  50% { r: 6; opacity: 1; }
+}
+@keyframes psLine { 
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.welcome-hero { padding: 46px 24px 26px; }
+.welcome-brand-main { gap: 30px; }
+.welcome-logo.qj-logo svg { width: 96px; height: 96px; filter: drop-shadow(rgba(176, 133, 64, 0.34) 0px 10px 26px); animation: 7s ease-in-out 0s infinite normal none running qjFloat; }
+.welcome-brand-text { gap: 5px; }
+.welcome-brand-text .welcome-title { font-size: 46px; letter-spacing: 0.06em; }
+.welcome-brand-text .welcome-title .welcome-en { font-size: 18px; margin-left: 14px; letter-spacing: 0.08em; color: rgb(160, 128, 63); }
+.welcome-brand-text .welcome-tagline { font-size: 17px; letter-spacing: 0.06em; color: rgb(109, 76, 30); }
+.welcome-brand-text .welcome-tagline-en { font-size: 12.5px; letter-spacing: 0.04em; color: rgb(160, 138, 107); }
+.welcome-actions { margin-top: 30px; gap: 16px; }
+.welcome-actions .welcome-btn { padding: 11px 30px; border-radius: 10px; font-size: 14.5px; letter-spacing: 0.04em; box-shadow: rgba(176, 133, 64, 0.16) 0px 6px 18px; }
+.welcome-actions .welcome-btn.primary { box-shadow: rgba(187, 34, 34, 0.32) 0px 8px 24px; }
+.welcome-sub { margin-top: 22px; font-size: 13px; color: rgb(138, 106, 58); letter-spacing: 0.02em; line-height: 1.95; }
+.welcome-sub .ws-zh { font-size: 13.5px; color: rgb(109, 76, 30); letter-spacing: 0.04em; }
+.welcome-sub .ws-zh b { color: rgb(163, 51, 39); font-weight: 600; }
+.welcome-sub .ws-zh2 { font-size: 12px; color: rgb(138, 106, 58); }
+.welcome-sub .ws-en { font-size: 11px; color: rgb(160, 138, 107); letter-spacing: 0.02em; }
+.welcome-sub .ws-en2 { font-size: 11px; color: rgb(176, 154, 106); }
+.welcome-paper-scene .ps-quote-en { margin-top: 4px; font-size: 11px; color: rgb(176, 154, 106); letter-spacing: 2px; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+.xiangjiang-scene { position: relative; margin: -8px auto 0px; width: 100%; max-width: 100%; padding: 0px; height: clamp(150px, 17vw, 280px); z-index: 0; overflow: hidden; }
+.xiangjiang-scene svg { width: 100%; height: 100%; display: block; }
+.xiangjiang-scene svg { width: 100%; height: 214px; display: block; }
+.welcome-paper-scene { position: relative; z-index: 1; }
+.xj-wave-1 { stroke-dasharray: 240, 240; animation: 6.5s linear 0s infinite normal none running xjDash; }
+.xj-wave-2 { stroke-dasharray: 280, 280; animation: 8.5s linear 0s infinite normal none running xjDash; }
+.xj-wave-3 { stroke-dasharray: 320, 320; animation: 10.5s linear 0s infinite normal none running xjDash; }
+.xj-hill-1 { animation: 9s ease-in-out 0s infinite normal none running xjHill; }
+.xj-hill-2 { animation: 11s ease-in-out 0s infinite normal none running xjHill; }
+.xj-boat { animation: 6s ease-in-out 0s infinite normal none running xjBoat; transform-origin: 0px 12px; }
+.xj-fog { animation: 12s ease-in-out 0s infinite normal none running xjFog; }
+@keyframes xjDash { 
+  100% { stroke-dashoffset: -240; }
+}
+@keyframes xjHill { 
+  0%, 100% { opacity: 0.16; }
+  50% { opacity: 0.28; }
+}
+@keyframes xjBoat { 
+  0%, 100% { transform: translate(0px, 0px) rotate(-1.4deg); }
+  50% { transform: translate(2.5px, -2.5px) rotate(1.4deg); }
+}
+@keyframes xjFog { 
+  0%, 100% { transform: translateX(0px); opacity: 0.7; }
+  50% { transform: translateX(56px); opacity: 1; }
+}
+.welcome-body { padding-top: 20px; }
+.welcome-grid { gap: 16px; }
+.quick-card { border-radius: 14px; padding: 18px 16px; border-color: rgba(176, 133, 64, 0.28); background: linear-gradient(rgb(255, 253, 248), rgb(251, 246, 234)); }
+.quick-card h4 { font-size: 15px; letter-spacing: 0.02em; }
+.quick-card p { font-size: 12.5px; }
+.quick-card em { font-size: 11px; letter-spacing: 0.04em; }
+.welcome-paper-scene { margin-top: 30px; opacity: 0.88; }
+.welcome-paper-scene .ps-quote { letter-spacing: 8px; }
+#welcome-page { background: linear-gradient(rgb(244, 239, 224) 0%, rgb(253, 251, 245) 42%, rgb(244, 239, 224) 100%); }
+body { background-color: rgb(244, 239, 224); }
+.acm-twocol figure, .acm-twocol table, .acm-twocol .mermaid, .acm-twocol .katex-display, .acm-twocol pre, .acm-twocol .qj-block, .acm-twocol h1, .acm-twocol h2, .acm-twocol h3 { break-inside: avoid; }
+body.theme-dark .latex-infobar { background: rgb(42, 42, 42); border-color: rgb(85, 85, 85); color: rgb(201, 185, 143); }
+body.theme-dark .latex-infobar .lbx-tpl { color: rgb(232, 200, 118); }
+body.theme-dark .thu-missing { background: rgb(51, 41, 28); border-color: rgb(184, 134, 47); color: rgb(227, 192, 138); }
+body.qj-lite .welcome-anim, body.qj-lite .ps-flow, body.qj-lite .bg-river, body.qj-lite .welcome-logo.qj-logo svg, body.qj-lite .qj-mult { animation: auto ease 0s 1 normal none running none !important; transition: none !important; }
+body.qj-lite #preview-render .mermaid svg { animation: auto ease 0s 1 normal none running none !important; }
+.welcome-brand-main { flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.welcome-title { margin-top: 2px; }
+.xj-caption { margin: -6px auto 0px; text-align: center; font-size: 11.5px; color: rgb(176, 154, 106); letter-spacing: 3px; font-family: Georgia, "Times New Roman", serif; }
+.welcome-footer { margin: 6px auto 14px; text-align: center; line-height: 1.9; }
+.welcome-footer .wf-line { font-size: 11px; color: rgb(176, 154, 106); letter-spacing: 2px; font-family: Georgia, "Times New Roman", serif; }
+.welcome-footer .wf-zh { display: block; font-size: 10.5px; color: rgb(201, 184, 145); letter-spacing: 4px; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+body.notes-on { overflow: hidden; background: rgb(247, 242, 230); }
+body.notes-on html { background: rgb(247, 242, 230); }
+body.android #notes-edit-view.doc-mode .nh-right, body.android #notes-edit-view.doc-mode .nh-title { display: none !important; }
+body.android #notes-edit-view.doc-mode #notes-doc-bar { display: flex !important; }
+body.android #notes-edit-view:not(.doc-mode) #notes-doc-bar { display: none !important; }
+body.android #notes-edit-view.doc-mode .ndoc-eye.on { color: rgb(163, 51, 39); }
+body.android #note-fmtbar { overflow-x: hidden; }
+body.android #note-fmtbar .nf-grp { flex: 1 1 0px; min-width: 0px; padding: 0px 1px; }
+body.android #note-fmtbar .nf-grp svg { width: 20px; height: 20px; }
+body.qj-wb-open .app-row { visibility: hidden; opacity: 0; transition: opacity 0.18s; }
+body.qj-wb-open { overflow: hidden; }
+.qj-read-ctl { display: inline-flex; align-items: center; gap: 0px; max-width: 0px; opacity: 0; overflow: hidden; transition: max-width 0.38s, opacity 0.3s; }
+.qj-read-ctl.open { max-width: 320px; opacity: 1; gap: 2px; }
+body.android #notes-edit-view.doc-mode #ndoc-fname { flex: 1 1 0%; min-width: 0px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qj-edit-ctl { display: inline-flex; align-items: center; gap: 0px; max-width: 0px; opacity: 0; overflow: hidden; transition: max-width 0.4s, opacity 0.3s; }
+.qj-edit-ctl.open { max-width: 340px; opacity: 1; gap: 2px; }
+body.android .qj-edit-ctl { max-width: 0px; opacity: 0; }
+body.android .qj-edit-ctl.open { max-width: 320px; opacity: 1; }
+#qj-style-btn.on { color: rgb(163, 51, 39); }
+.qj-style-panel { position: absolute; top: 46px; right: 6px; z-index: 90; background: rgb(255, 253, 247); border: 1px solid rgb(224, 213, 188); border-radius: 10px; padding: 8px 10px; box-shadow: rgba(44, 44, 44, 0.28) 0px 6px 18px; max-width: 92vw; }
+.qj-sp-row { display: flex; align-items: center; gap: 5px; margin: 4px 0px; }
+.qj-sp-label { font-size: 12px; color: rgb(122, 106, 74); width: 38px; flex: 0 0 auto; }
+.qj-sw { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(44, 44, 44, 0.18); padding: 0px; cursor: pointer; }
+.qj-sp-b { border: 1px solid rgb(216, 203, 169); background: rgb(250, 244, 230); color: rgb(74, 63, 40); border-radius: 6px; padding: 3px 10px; font-size: 12px; cursor: pointer; }
+.qj-sp-b.on { background: rgb(163, 51, 39); color: rgb(255, 255, 255); border-color: rgb(163, 51, 39); }
+body { max-width: 100vw; overflow-x: hidden; }
+body { counter-reset: katexEqnNo 0 mmlEqnNo 0; }
+#welcome-page { position: fixed; top: var(--nav-h, 46px); left: 0px; right: 0px; bottom: 0px; overflow-y: auto; z-index: 100; }
+body.on-welcome .app-row, body.on-welcome .tb-popup, body.on-welcome #statusbar { display: none !important; }
+body.on-welcome #toolbar, body.on-welcome .top-nav, body.notes-on #toolbar, body.notes-on .top-nav { display: none !important; }
+body.on-welcome #welcome-page { top: 0px; }
+html.android-notes-only #welcome-page { top: 0px; }
+#note-prev-wrap mark.qj-read-sent { background: rgb(255, 229, 138); color: rgb(17, 17, 17); border-radius: 2px; padding: 0px 1px; }
+#note-prev-wrap .qj-read-active { outline: rgb(42, 125, 225) dashed 1.5px; outline-offset: 2px; border-radius: 4px; }
+.quick-card:hover { border-color: rgb(147, 197, 253); box-shadow: rgba(0, 114, 196, 0.12) 0px 2px 8px; }
+.recent-file-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; margin-bottom: 6px; background: rgb(255, 255, 255); border: 1px solid rgb(237, 242, 247); border-radius: 8px; cursor: pointer; font-size: 14px; color: rgb(45, 55, 72); }
+.recent-file-item:hover { border-color: rgb(147, 197, 253); background: rgb(240, 247, 255); }
+.recent-empty { color: rgb(153, 153, 153); padding: 12px 0px; }
+.welcome-recent h3 { display: flex; align-items: center; gap: 10px; }
+.recent-actions { margin-left: auto; display: inline-flex; gap: 6px; }
+.recent-act { font-size: 12px; padding: 3px 10px; border-radius: 999px; cursor: pointer; border: 1px solid rgba(127, 127, 127, 0.35); background: rgb(255, 255, 255); color: rgb(85, 85, 85); }
+.recent-act:hover { background: var(--qj-primary-soft); color: var(--qj-primary); border-color: var(--qj-primary); }
+body.dark .recent-act { background: rgb(22, 35, 59); color: rgb(203, 213, 225); border-color: rgb(30, 58, 95); }
+html.core-mode body > #qj-core-out { display: block !important; }
+#qj-core-out { display: none; }
+#qj-core-out { padding: 16px 18px 44px; font-size: 15px; line-height: 1.7; color: rgb(31, 35, 40); overflow-y: auto; }
+#qj-core-out .markdown-body table { width: 100% !important; min-width: 0px !important; }
+</style>
+</head>
+<body>
+<div class="welcome-hero">
+    <div class="welcome-grid-bg"></div>
+    <div class="qj-bamboo-layer" aria-hidden="true">
+      <span class="qj-bb" style="left:6%;animation-delay:-2s">九九八十一</span>
+      <span class="qj-bb" style="left:18%;animation-delay:-5s">三七二十一</span>
+      <span class="qj-bb" style="left:31%;animation-delay:-1s">五六三十</span>
+      <span class="qj-bb" style="left:47%;animation-delay:-6s">二五一十</span>
+      <span class="qj-bb" style="left:60%;animation-delay:-3s">九九八十一</span>
+      <span class="qj-bb" style="left:73%;animation-delay:-7s">四八三十二</span>
+      <span class="qj-bb" style="left:86%;animation-delay:-4s">三三得九</span>
+      <span class="qj-bb" style="left:92%;animation-delay:-8s">八九七十二</span>
+      <span class="qj-leaf" style="left:10%;animation-delay:-3s"></span>
+      <span class="qj-leaf" style="left:24%;animation-delay:-7s"></span>
+      <span class="qj-leaf" style="left:38%;animation-delay:-2s"></span>
+      <span class="qj-leaf" style="left:52%;animation-delay:-9s"></span>
+      <span class="qj-leaf" style="left:66%;animation-delay:-5s"></span>
+      <span class="qj-leaf" style="left:80%;animation-delay:-1s"></span>
+      <span class="qj-leaf" style="left:94%;animation-delay:-6s"></span>
+    </div>
+    <div class="welcome-brand">
+      <div class="welcome-brand-main">
+    <div class="welcome-logo qj-logo">
+      <svg viewBox="0 0 512 512" width="96" height="96" style="display:block;">
+        <rect x="0" y="0" width="512" height="512" rx="96" fill="#f4efe0"></rect>
+        <path d="M60,70 L80,50 L100,70 L120,50 L140,70 L160,50 L180,70 L200,50 L220,70 L240,50 L260,70 L280,50 L300,70 L320,50 L340,70 L360,50 L380,70 L400,50 L420,70 L440,50 L460,70" stroke="#b08540" stroke-width="4" fill="none"></path>
+        <path d="M60,442 L80,462 L100,442 L120,462 L140,442 L160,462 L180,442 L200,462 L220,442 L240,462 L260,442 L280,462 L300,442 L320,462 L340,442 L360,462 L380,442 L400,462 L420,442 L440,462 L460,442" stroke="#b08540" stroke-width="4" fill="none"></path>
+        <rect x="84" y="80" width="64" height="352" rx="4" fill="#e6c788"></rect>
+        <rect x="164" y="80" width="64" height="352" rx="4" fill="#e9ca8c"></rect>
+        <rect x="244" y="80" width="64" height="352" rx="4" fill="#e6c788"></rect>
+        <rect x="324" y="80" width="64" height="352" rx="4" fill="#e9ca8c"></rect>
+        <rect x="404" y="80" width="64" height="352" rx="4" fill="#e6c788"></rect>
+        <line x1="84" y1="170" x2="148" y2="170" stroke="#b48944" stroke-width="5"></line>
+        <line x1="164" y1="250" x2="228" y2="250" stroke="#b48944" stroke-width="5"></line>
+        <line x1="244" y1="160" x2="308" y2="160" stroke="#b48944" stroke-width="5"></line>
+        <line x1="324" y1="240" x2="388" y2="240" stroke="#b48944" stroke-width="5"></line>
+        <line x1="404" y1="190" x2="468" y2="190" stroke="#b48944" stroke-width="5"></line>
+        <text x="256" y="280" font-family="serif" font-size="96" font-weight="bold" fill="#2c2c2c" text-anchor="middle">9×9</text>
+        <rect x="410" y="96" width="60" height="60" rx="4" fill="#bb2222" opacity="0.85"></rect>
+      </svg>
+    </div>
+      <div class="welcome-brand-text">
+        <h1 class="welcome-title">青简<span class="welcome-en">QingJian</span></h1>
+        <div class="welcome-tagline">离线・轻量・草稿纸</div>
+        <div class="welcome-tagline-en">Write freely. Ideas need no compiler.</div>
+      </div>
+      </div>
+    </div>
+    <div class="welcome-actions">
+      <button class="welcome-btn" id="welcome-new">＋ 新建文档</button>
+      <button class="welcome-btn secondary" id="welcome-open">打开文件</button>
+      <button class="welcome-btn secondary" id="welcome-open-folder">打开文件夹</button>
+      <button class="welcome-btn secondary" id="welcome-notes-card">🗒️ 记事本</button>
+    </div>
+    <div class="welcome-sub">
+      <div class="ws-zh">支持 <b>Markdown</b>｜<b>HTML</b>｜<b>LaTeX</b> —— 原生渲染 · 专业排版 · 桌面级流畅</div>
+      <div class="ws-zh2">—— 像 LaTeX 一样严谨，比 Office 更轻盈，如纸笔般自然。</div>
+      <div class="ws-en">Markdown｜HTML｜LaTeX — Native Rendering · Professional Typesetting · Desktop-Grade Responsiveness</div>
+      <div class="ws-en2">— LaTeX-grade precision. Lighter than Office. As natural as pen and paper.</div>
+    </div>
+  </div>
+<div class="welcome-body">
+    <div class="welcome-grid">
+      <div class="quick-card" data-template="basic"><span class="qc-ico">📝</span><h4>解析优先编辑</h4><p>所见即所写 · 单文件 · 离线</p><em>Parse-First Editing</em></div>
+      <div class="quick-card" data-template="latex"><span class="qc-ico">∑</span><h4>LaTeX 学术场</h4><p>宏包即载 · 定理自明 · 公式流韵</p><em>Academic Dojo</em></div>
+      <div class="quick-card" data-template="math"><span class="qc-ico">ƒx</span><h4>全语义数学</h4><p>KaTeX · mhchem · 矩阵 · 方程编号</p><em>Full-Semantic Math</em></div>
+      <div class="quick-card" data-template="mermaid"><span class="qc-ico">🔀</span><h4>图表图谱</h4><p>图以载道 · 白板随想 · 万物可绘</p><em>Diagram &amp; Graph</em></div>
+      <div class="quick-card" data-template="table"><span class="qc-ico">▦</span><h4>表格文档</h4><p>表格如玉 · 混排自如 · 数据规整</p><em>Table &amp; Docs</em></div>
+      <div class="quick-card" data-template="reader"><span class="qc-ico">🔊</span><h4>离线朗读</h4><p>书声琅琅 · 离线可诵 · 听读自如</p><em>Offline TTS</em></div>
+    </div>
+    <div class="welcome-recent">
+      <h3>最近打开
+        <span class="recent-actions">
+          <button type="button" class="recent-act" id="recent-clear" title="清空最近打开记录" data-bound="1">清空</button>
+        </span>
+      </h3>
+      <div class="recent-files" id="recent-files"><div class="recent-empty">暂无历史记录</div></div>
+    </div>
+    <!-- v15.45：蔡伦造纸 × 互联网 底部场景——竹简 → 纸帘 → 笔墨代码 → 网络字节，书写之道一脉相承 -->
+    <div class="welcome-paper-scene" aria-hidden="true">
+      <svg viewBox="0 0 1200 170" preserveAspectRatio="xMidYMid meet">
+        <g class="ps-bamboo">
+          <rect x="40" y="52" width="22" height="92" rx="3" fill="#e6c788" stroke="#b08540" stroke-width="1.2"></rect>
+          <rect x="68" y="52" width="22" height="92" rx="3" fill="#e9ca8c" stroke="#b08540" stroke-width="1.2"></rect>
+          <rect x="96" y="52" width="22" height="92" rx="3" fill="#e6c788" stroke="#b08540" stroke-width="1.2"></rect>
+          <line x1="40" y1="84" x2="62" y2="84" stroke="#b48944" stroke-width="2"></line>
+          <line x1="68" y1="108" x2="90" y2="108" stroke="#b48944" stroke-width="2"></line>
+          <line x1="96" y1="78" x2="118" y2="78" stroke="#b48944" stroke-width="2"></line>
+          <text x="51" y="96" font-size="11" fill="#a33327" text-anchor="middle" font-family="KaiTi,serif">简</text>
+          <text x="79" y="96" font-size="11" fill="#a33327" text-anchor="middle" font-family="KaiTi,serif">牍</text>
+        </g>
+        <g class="ps-paper">
+          <path d="M150 110 q 60 -8 120 0" stroke="#d9c07a" stroke-width="1.4" fill="none"></path>
+          <path d="M150 122 q 60 -8 120 0" stroke="#d9c07a" stroke-width="1.4" fill="none"></path>
+          <rect x="158" y="44" width="104" height="44" rx="3" fill="#f7efdd" stroke="#b08540" stroke-width="1.2" transform="rotate(6 210 66)"></rect>
+          <path d="M216 34 q 10 14 4 28" stroke="#caa654" stroke-width="1.4" fill="none"></path>
+          <line x1="176" y1="60" x2="250" y2="60" stroke="#b08540" stroke-width="1" opacity=".7" transform="rotate(6 210 66)"></line>
+          <text x="210" y="100" font-size="10" fill="#8a5a23" text-anchor="middle" font-family="KaiTi,serif">纸 · Paper</text>
+        </g>
+        <g class="ps-code">
+          <text x="360" y="78" font-size="26" fill="#a33327" font-family="monospace">&lt;/&gt;</text>
+          <text x="430" y="80" font-size="22" fill="#b08540" font-family="serif">∑</text>
+          <text x="486" y="76" font-size="15" fill="#8a5a23" font-family="monospace">$…$</text>
+          <text x="552" y="82" font-size="20" fill="#a33327" font-family="monospace">{ }</text>
+          <text x="610" y="78" font-size="16" fill="#b08540" font-family="monospace">\TeX</text>
+          <text x="396" y="112" font-size="11" fill="#a0803f" text-anchor="middle" font-family="KaiTi,serif">字节 · Bytes</text>
+        </g>
+        <g class="ps-web">
+          <circle cx="760" cy="70" r="5" fill="#a33327"></circle>
+          <circle cx="820" cy="96" r="4" fill="#b08540"></circle>
+          <circle cx="880" cy="60" r="5" fill="#a33327"></circle>
+          <circle cx="940" cy="92" r="4" fill="#b08540"></circle>
+          <circle cx="1000" cy="66" r="5" fill="#a33327"></circle>
+          <line x1="760" y1="70" x2="820" y2="96" stroke="#d9c07a" stroke-width="1"></line>
+          <line x1="820" y1="96" x2="880" y2="60" stroke="#d9c07a" stroke-width="1"></line>
+          <line x1="880" y1="60" x2="940" y2="92" stroke="#d9c07a" stroke-width="1"></line>
+          <line x1="940" y1="92" x2="1000" y2="66" stroke="#d9c07a" stroke-width="1"></line>
+          <line x1="760" y1="70" x2="940" y2="92" stroke="#e6c788" stroke-width=".8"></line>
+          <text x="880" y="128" font-size="11" fill="#a0803f" text-anchor="middle" font-family="KaiTi,serif">互联 · Network</text>
+        </g>
+        <g class="ps-flow">
+          <path d="M132 66 h 20" stroke="#caa654" stroke-width="2" marker-end="url(#psArrow)"></path>
+          <path d="M300 66 h 20" stroke="#caa654" stroke-width="2"></path>
+          <path d="M686 66 h 20" stroke="#caa654" stroke-width="2"></path>
+          <path d="M1032 66 h 20" stroke="#caa654" stroke-width="2"></path>
+          <defs>
+            <marker id="psArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 z" fill="#caa654"></path>
+            </marker>
+          </defs>
+        </g>
+      </svg>
+      <div class="ps-quote">以字节为简，承载学术思考。</div>
+      <div class="ps-quote-en">Bytes as bamboo slips, holding scholarly thought.</div>
+    </div>
+    <!-- v15.53：湘江河畔意象——远山 · 江水 · 扁舟 · 薄雾，淡雅衬底 -->
+    <div class="xiangjiang-scene" aria-hidden="true">
+      <svg viewBox="0 0 1440 240" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="xj-fog" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f4efe0" stop-opacity="0"></stop>
+            <stop offset="1" stop-color="#f4efe0" stop-opacity="0.85"></stop>
+          </linearGradient>
+        </defs>
+        <!-- 远山（两层剪影，呼吸微动） -->
+        <path class="xj-hill xj-hill-1" d="M0 128 C 160 92 300 118 430 100 C 580 78 700 122 830 96 C 960 70 1090 112 1210 92 C 1330 74 1400 100 1440 92 L 1440 240 L 0 240 Z" fill="#c9ab74" opacity="0.20"></path>
+        <path class="xj-hill xj-hill-2" d="M0 168 C 220 132 380 162 540 140 C 720 116 880 162 1060 138 C 1200 120 1340 150 1440 136 L 1440 240 L 0 240 Z" fill="#b08540" opacity="0.15"></path>
+        <!-- 江水波纹（数道细浪，逐道流动） -->
+        <path class="xj-wave xj-wave-1" d="M0 186 Q 60 181 120 186 T 240 186 T 360 186 T 480 186 T 600 186 T 720 186 T 840 186 T 960 186 T 1080 186 T 1200 186 T 1320 186 T 1440 186" stroke="#b08540" stroke-opacity="0.34" stroke-width="1.1" fill="none"></path>
+        <path class="xj-wave xj-wave-2" d="M0 202 Q 70 196 140 202 T 280 202 T 420 202 T 560 202 T 700 202 T 840 202 T 980 202 T 1120 202 T 1260 202 T 1400 202" stroke="#b08540" stroke-opacity="0.24" stroke-width="1" fill="none"></path>
+        <path class="xj-wave xj-wave-3" d="M0 218 Q 80 213 160 218 T 320 218 T 480 218 T 640 218 T 800 218 T 960 218 T 1120 218 T 1280 218 T 1440 218" stroke="#a0803f" stroke-opacity="0.18" stroke-width="1" fill="none"></path>
+        <!-- 一叶扁舟（湘江渔舟，轻摇浮沉） -->
+        <g transform="translate(1090 190)">
+          <g class="xj-boat">
+            <path d="M-30 14 Q 0 26 30 14 L 24 6 Q 0 14 -24 6 Z" fill="#8a5a23" opacity="0.65"></path>
+            <line x1="0" y1="2" x2="0" y2="-16" stroke="#6b4a1f" stroke-width="1.6" opacity="0.7"></line>
+            <path d="M0 -16 L 14 -8 L 0 -4 Z" fill="#a33327" opacity="0.65"></path>
+          </g>
+        </g>
+        <!-- 江上薄雾（缓移呼吸） -->
+        <rect class="xj-fog" x="-60" y="150" width="1560" height="90" fill="url(#xj-fog)"></rect>
+      </svg>
+      <div class="xj-caption">By the Xiangjiang River · Changsha</div>
+    </div>
+    <!-- v15.79：底端署名——匠心中国 · 青简研究中心 -->
+    <footer class="welcome-footer">
+      <span class="wf-line">Crafted in China · QingJian Research Center</span>
+      <span class="wf-zh">匠心铸于中国 · 青简研究中心</span>
+    </footer>
+  </div>
+<script>
+
+(function(){
+  function toast(msg){
+    let el = document.getElementById('qj-w-toast');
+    if(!el){ el = document.createElement('div'); el.id='qj-w-toast';
+      el.style.cssText='position:fixed;top:16%;left:50%;transform:translateX(-50%);background:rgba(44,49,53,.9);color:#fff;padding:12px 26px;border-radius:12px;font-size:15px;letter-spacing:1px;z-index:999;transition:opacity .4s;box-shadow:0 8px 30px rgba(0,0,0,.2);';
+      document.body.appendChild(el); }
+    el.textContent = msg;
+    el.style.opacity = '1';
+    clearTimeout(el._t);
+    el._t = setTimeout(()=>{ el.style.opacity='0'; }, 2000);
+  }
+  const acts = { 'welcome-new':'新建文档', 'welcome-open':'打开文件', 'welcome-open-folder':'打开文件夹', 'welcome-notes-card':'记事本' };
+  Object.keys(acts).forEach(id => {
+    const btn = document.getElementById(id);
+    if(btn) btn.addEventListener('click', ()=>{ toast('「'+acts[id]+'」——欢迎页预览 · 请在 QingJian 完整版中体验'); });
+  });
+  document.querySelectorAll('.quick-card').forEach(card => {
+    card.addEventListener('click', ()=>{ toast('模板：'+(card.querySelector('h4')||{}).textContent || ''); });
+  });
+  const clearBtn = document.getElementById('recent-clear');
+  if(clearBtn) clearBtn.addEventListener('click', ()=>{
+    const rf = document.getElementById('recent-files');
+    if(rf) rf.innerHTML = '<div class="recent-empty">暂无历史记录</div>';
+    toast('最近打开已清空');
+  });
+})();
+
+</script>
+</body>
+</html>
