@@ -198,7 +198,7 @@ For academic papers demanding repeated polishing, QingJian offers a calmer, more
 
 ## 📄 文档 | Docs
 
-- [教程：用 LaTeX 与 Markdown 在青简中深化学术思考](./docs/tutorial.md)
+- [教程：用 LaTeX 与 Markdown 在青简中深化学术思考](./docs/tutorial.pdf)
 - [模板渲染技术实现与操作指南](./docs/templates.md)
 - [开源合规说明](./docs/compliance.md)
 
